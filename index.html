@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<title>Document</title>
+</head>
+<body>
+	<pre>
+let a = ['a','b','c',NaN, 0], b = ['a','c','d'], c = [NaN, undefined, 0, false, 1, 'a'];
+const result = a.filter( i =>  !b.toString().includes(i) ).concat( b.filter( j =>  !a.toString().includes(j) ) );
+console.log(result.filter(Boolean));
+console.log( c.filter( e => e == 0 || e) )
+mainLoop: for( i = 0; i < 3; i++ ) {
+    loop2: for( j = 0; j <3; j++) {
+        console.log({i: i, j: j});
+        if ( i == 1 )  continue mainLoop;
+    }
+}
+const array = [1, 2, 3, 5, 6, 7, 8, 9, 10];
+const groupBy = (arr, fn) =>
+	 arr.map(val => fn(val) )
+	.reduce( (acc, val, i) => {
+		acc[val] = ( acc[val] || [] ).concat( arr[i] );
+		return acc;
+	}, {})
+
+
+console.log(groupBy(array, Math.floor));
+
+const inventory = [
+	{ name: 'asparagus', type: 'vegetables', quantity: 5 },
+	{ name: 'bananas',  type: 'fruit', quantity: 0 },
+	{ name: 'goat', type: 'meat', quantity: 23 },
+	{ name: 'cherries', type: 'fruit', quantity: 5 },
+	{ name: 'fish', type: 'meat', quantity: 22 }
+];
+console.log(groupBy(inventory), 'type')
+console.log(inventory.groupBy( ({ type }) => type ));
+
+console.log(inventory.map( val => val));
+
+
+/**
+ * Given an array of objects, return an object whose keys are the values of a specified key in the
+ * objects, and whose values are arrays of the objects that have that value for the specified key
+ * @param arr - The array to be grouped.
+ * @param key - The key to group by.
+ */
+const objgroupBy = (arr, key) => {
+	return arr.reduce( (acc, item, i) => {
+		if( Object.keys(item).includes( key ) ) {
+			// acc[item[key]] = (item || [] ).concat(arr[i])
+			/* Adding the item to the array of the key. */
+			acc[item[key]] = ( acc[item[key]] || []).concat(arr[i])
+		} else {
+			console.log(item, 'does not have'+ key );
+		}
+
+		return acc;
+	}, {})
+}
+// objgroupBy(inventory, 'type')
+const julia = [], kate = [];
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] }
+];
+
+dogs.forEach(function(dog) {
+  dog.recommendedFood = Math.trunc(dog.weight ** .72 * 28);
+})
+
+const ownersEatTooMuch = dogs.filter(function(dog) {
+  return dog.curFood > dog.recommendedFood;
+}).flatMap(dog => dog.owners);
+
+console.log(ownersEatTooMuch);
+var aa = [{age: 12, name: ['mohan','nagu'] },{age:34, name: ['raju','mahesh']}]
+console.log(aa.flatMap((a => a.name)))
+
+const findMissingPerson = function (params) {
+	let n = params.length + 1;
+	let sum = 0;
+	for (let a in params) {
+		sum += params[a];
+	}
+	console.log(sum);
+	return Math.floor( (n * (n + 1)) /2 ) - sum
+}
+
+const jsonPath = 'name.address.pinCode';
+const person = {
+	name: 'mohan',
+	address: {
+		street: 'Omkar Nagar',
+		pinCode: 591124
+	}
+}
+console.log(person);
+function getObjValue(obj, path) {
+	let parts = path.split('.');
+	if ( obj[parts[0]].length === 1 )
+		console.log(obj[parts[0]]);
+	return getObjValue(obj[parts[0]], parts.slice(1).join('.'));
+}
+console.log(getObjValue(person, jsonPath));
+	</pre>
+	<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
